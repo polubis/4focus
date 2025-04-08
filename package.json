@@ -6,9 +6,21 @@
   },
   "scripts": {
     "fix:lint": "npx @biomejs/biome lint --fix",
-    "fix:format": "npx @biomejs/biome format --write"
+    "fix:format": "npx @biomejs/biome format --write",
+    "ci:lint": "npx @biomejs/biome lint",
+    "ci:format": "npx @biomejs/biome format",
+    "prepare": "husky"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4"
+    "@biomejs/biome": "1.9.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs,json,md,mdx,astro}": [
+      "npm run ci:lint",
+      "npm run ci:format",
+      "git add"
+    ]
   }
 }
