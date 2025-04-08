@@ -1,9 +1,5 @@
 {
   "name": "4focus",
-  "engines": {
-    "node": "22.12.0",
-    "npm": "9.6.6"
-  },
   "scripts": {
     "fix:lint": "npx @biomejs/biome lint --fix",
     "fix:format": "npx @biomejs/biome format --write",
