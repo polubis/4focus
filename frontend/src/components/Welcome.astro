@@ -1,10 +1,10 @@
 ---
-import astroLogo from '../assets/astro.svg';
-import background from '../assets/background.svg';
+import { Counter } from "./Counter";
 import "../styles/global.css";
 ---
 
 <div id="container" class="bg-red-500">
 	HiFrontend
+	<Counter client:load />
 </div>
 
