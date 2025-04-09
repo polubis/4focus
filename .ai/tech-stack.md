@@ -4,10 +4,13 @@
 - TypeScript
 - Tailwind
 
+## Backend
+- Supabase
+
 ## Testing
 - Playwright
 - Vitest
 
-CI/CD i Hosting
+## CI/CD i Hosting
 - Github Actions
 - Docker

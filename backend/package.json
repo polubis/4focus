@@ -1,0 +1,9 @@
+{
+  "name": "4focus-backend",
+  "scripts": {
+    "supabase": "supabase"
+  },
+  "devDependencies": {
+    "supabase": "^2.20.12"
+  }
+}
