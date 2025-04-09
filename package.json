@@ -1,13 +1,31 @@
 {
   "name": "4focus",
+  "type": "module",
+  "version": "0.0.1",
   "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
     "fix:lint": "npx @biomejs/biome lint --fix",
     "fix:format": "npx @biomejs/biome format --write",
     "ci:lint": "npx @biomejs/biome lint",
     "ci:format": "npx @biomejs/biome format",
     "prepare": "husky"
   },
+  "dependencies": {
+    "@astrojs/react": "^4.2.3",
+    "@supabase/supabase-js": "^2.49.4",
+    "@tailwindcss/vite": "^4.1.3",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.1",
+    "astro": "^5.6.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwindcss": "^4.1.3"
+  },
   "devDependencies": {
+    "supabase": "^2.20.12",
     "@biomejs/biome": "1.9.4",
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-conventional": "^19.8.0",
