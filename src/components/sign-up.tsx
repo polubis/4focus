@@ -1,5 +1,5 @@
 import { useState, type FormEvent, type ChangeEvent } from "react";
-import { supabase } from "../core/supabase";
+import { supabase } from "../db/supabase";
 
 interface FormErrors {
   email: string;

@@ -11,7 +11,8 @@
     "fix:format": "npx @biomejs/biome format --write",
     "ci:lint": "npx @biomejs/biome lint",
     "ci:format": "npx @biomejs/biome format",
-    "prepare": "husky"
+    "prepare": "husky",
+    "supabase": "supabase"
   },
   "dependencies": {
     "@astrojs/react": "^4.2.3",

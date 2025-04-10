@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { assert } from "../libs/assert";
+import type { Database } from "./database.types";
 
 const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
@@ -13,4 +14,4 @@ assert(
   "Supabase Anon Key is missing",
 );
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
