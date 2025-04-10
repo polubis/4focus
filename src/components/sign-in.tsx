@@ -6,7 +6,7 @@ interface FormErrors {
   password: string;
 }
 
-export const SignupForm = () => {
+export const SigninForm = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -34,19 +34,20 @@ export const SignupForm = () => {
     if (!password) {
       newErrors.password = "Password is required";
       hasError = true;
-    } else if (password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
-      hasError = true;
     }
 
     setErrors(newErrors);
 
     if (!hasError) {
-      const { error, data } = await supabase.auth.signUp({ email, password });
+      const { error, data } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
       if (error) {
-        alert(`Blad rejestracji: ${error.message}`);
+        alert(`Sign in error: ${error.message}`);
       } else {
-        alert("Rejestracja zakończona!");
+        alert("Successfully signed in!");
+        window.location.href = "/";
       }
     }
   };
@@ -125,14 +126,14 @@ export const SignupForm = () => {
           type="submit"
           className="w-full bg-primary text-primary-foreground hover:bg-primary/90 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
         >
-          Create Account
+          Sign In
         </button>
       </form>
 
       <p className="mt-4 text-center text-sm text-gray-600">
-        Already have an account?{" "}
-        <a href="/sign-in" className="text-primary hover:underline">
-          Sign in
+        Don't have an account yet?{" "}
+        <a href="/sign-up" className="text-primary hover:underline">
+          Create an account
         </a>
       </p>
     </div>
