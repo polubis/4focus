@@ -10,17 +10,18 @@
 
 ## 1. Przegląd projektu
 
-Aplikacja **4focus** (w wersji **MVP** - Minimum Viable Product) to narzędzie typu **Progressive Web App (PWA)** z responsywnym interfejsem (**RWD**), zaprojektowane w celu pomocy użytkownikom, w szczególności osobom z **ADHD** lub trudnościami w skupieniu, w organizacji codziennych zadań. Aplikacja wykorzystuje **Macierz Eisenhowera** do kategoryzacji zadań, pomagając w priorytetyzacji. Użytkownicy mogą przeglądać zadania w widoku kalendarza (dziennym, tygodniowym, miesięcznym lub niestandardowym), dodawać nowe zadania poprzez prosty interfejs oraz zarządzać ich statusem, w tym korzystać z **Trybu Skupienia** podczas wykonywania zadania. Celem **MVP** jest dostarczenie podstawowej funkcjonalności planowania i śledzenia zadań z naciskiem na prostotę i szybkość działania, dostępnej na urządzeniach mobilnych i desktopowych poprzez przeglądarkę internetową. Autoryzacja odbywa się za pomocą konta **Google**.
+Aplikacja **4focus** (w wersji **MVP** - Minimum Viable Product) to narzędzie typu **Progressive Web App (PWA)** z responsywnym interfejsem (**RWD**), zaprojektowane w celu pomocy użytkownikom, w szczególności osobom z **ADHD** lub trudnościami w skupieniu, w organizacji zadań. Aplikacja wykorzystuje **Macierz Eisenhowera** do kategoryzacji zadań, pomagając w priorytetyzacji. Użytkownicy mogą przeglądać zadania w uproszczonym widoku listy, dodawać nowe zadania poprzez prosty interfejs oraz zarządzać ich statusem, w tym korzystać z **Trybu Skupienia** podczas wykonywania zadania. Aplikacja generuje również dzienne raporty statystyk, które pomagają użytkownikowi śledzić postępy i poprawiać efektywność. Celem **MVP** jest dostarczenie podstawowej funkcjonalności planowania i śledzenia zadań z naciskiem na prostotę i szybkość działania, dostępnej na urządzeniach mobilnych i desktopowych poprzez przeglądarkę internetową. Autoryzacja odbywa się za pomocą konta **Google**.
 
 ## 2. Problem użytkownika
 
 Głównym problemem, który adresuje aplikacja **4focus**, są trudności ze skupieniem się na konkretnych czynnościach i efektywnym zarządzaniem czasem, co jest szczególnie powszechne u osób z **ADHD**, ale dotyka również szerokiego grona osób poszukujących prostych narzędzi do organizacji. Istniejące narzędzia mogą być zbyt skomplikowane, rozpraszające lub nie dostarczać odpowiedniej struktury priorytetyzacji oraz wsparcia w trakcie wykonywania zadania. Użytkownicy potrzebują prostego, intuicyjnego systemu, który pomoże im:
 
 -   Zrozumieć priorytety swoich zadań (co jest pilne, a co ważne).
--   Wizualizować swoje zadania w kontekście czasu (dzień, tydzień, miesiąc).
+-   Koncentrować się na realizacji aktualnych zadań.
 -   Łatwo dodawać i oznaczać zadania jako wykonane.
 -   Minimalizować wysiłek potrzebny do zarządzania listą zadań, aby skupić się na ich realizacji.
 -   **Otrzymać wsparcie w utrzymaniu koncentracji podczas pracy nad wybranym zadaniem.**
+-   **Otrzymać informacje zwrotne o swoich postępach i wzorcach zachowań.**
 
 **4focus MVP** ma na celu dostarczenie takiego właśnie narzędzia, koncentrując się na **Macierzy Eisenhowera** jako podstawowej metodzie organizacji oraz wprowadzając mechanizmy wspierające skupienie.
 
@@ -42,11 +43,11 @@ Głównym problemem, który adresuje aplikacja **4focus**, są trudności ze sku
 -   **FR-TASK-005:** Użytkownik musi mieć możliwość zmiany statusu zadania poprzez interakcję z elementem zadania na liście (np. kliknięcie przycisku/ikony statusu lub samego zadania). Przepływ statusów to: **TODO** -> **PENDING** -> **DONE**.
 -   **FR-TASK-006:** Dla zadań ze statusem **DONE**, aplikacja musi wyświetlać czas, jaki upłynął od momentu zmiany statusu na **PENDING** do momentu zmiany statusu na **DONE**.
 
-### 3.3. Widok Kalendarza i Listy Zadań (VIEW)
--   **FR-VIEW-001:** Aplikacja musi prezentować interfejs kalendarza.
--   **FR-VIEW-002:** Użytkownik musi mieć możliwość przełączania widoku kalendarza pomiędzy: **Dzień**, **Tydzień**, **Miesiąc**.
--   **FR-VIEW-003:** Użytkownik musi mieć możliwość wybrania niestandardowego zakresu dat do wyświetlenia (opcjonalnie, za pomocą date-range pickera).
--   **FR-VIEW-004:** Poniżej widoku kalendarza musi być wyświetlana lista zadań przypisanych do wybranego okresu (dnia, tygodnia, miesiąca lub zakresu).
+### 3.3. Widok Listy Zadań (VIEW)
+-   **FR-VIEW-001:** Aplikacja musi prezentować prosty interfejs listy zadań.
+-   **FR-VIEW-002:** Aplikacja zawsze prezentuje wszystkie zadania użytkownika w jednym widoku.
+-   **FR-VIEW-003:** [Usunięto - funkcjonalność poza zakresem MVP]
+-   **FR-VIEW-004:** Aplikacja musi wyświetlać listę wszystkich zadań użytkownika.
 -   **FR-VIEW-005:** Zadania na liście muszą być wizualnie rozróżnione (np. kolorem tła, etykietą) w zależności od przypisanej kategorii **Macierzy Eisenhowera**.
 -   **FR-VIEW-006:** Zadania na liście muszą być pogrupowane według kategorii **Macierzy Eisenhowera** (1. Pilne/Ważne, 2. Ważne/Niepilne, 3. Pilne/Nieważne, 4. Nieważne/Niepilne) i posortowane wewnątrz grup po aktualnym statusie.
 -   **FR-VIEW-007:** Użytkownik musi mieć możliwość podstawowego filtrowania listy zadań (kryteria do ustalenia, np. po statusie, kategorii).
@@ -61,9 +62,22 @@ Głównym problemem, który adresuje aplikacja **4focus**, są trudności ze sku
     -   Ukrywać standardowy interfejs aplikacji (np. listę zadań, kalendarz, nawigację).
     -   Udostępniać wyraźną opcję oznaczenia bieżącego zadania jako **DONE**.
     -   Przy próbie opuszczenia Trybu Skupienia przed oznaczeniem zadania jako **DONE** (np. przez nawigację wstecz, próbę zamknięcia aplikacji/karty), wyświetlić komunikat ostrzegawczy zniechęcający do przerwania (np. "Skupienie na jednym zadaniu pomaga w efektywności. Czy na pewno chcesz teraz przerwać?").
+    -   Pełnić funkcję blokera, który aktywnie utrudnia użytkownikowi wyjście z aktualnie wykonywanego zadania (np. poprzez dodatkowe potwierdzenia, opóźnienia w nawigacji lub inne mechanizmy zniechęcające do rozpraszania).
     -   Po oznaczeniu zadania jako **DONE** z poziomu Trybu Skupienia, aplikacja powinna powrócić do standardowego widoku (np. listy zadań).
 
-### 3.5. Prywatność (PRIV)
+### 3.5. Statystyki i Raportowanie (STATS)
+-   **FR-STATS-001:** Na koniec każdego dnia aplikacja musi automatycznie generować raport statystyk dla użytkownika.
+-   **FR-STATS-002:** Raport musi zawierać następujące informacje:
+    -   Średni czas wykonania zadań w danym dniu.
+    -   Liczba przypadków, gdy użytkownik niepotrzebnie sięgnął po telefon lub próbował opuścić Tryb Skupienia.
+    -   Punkty karne za zmiany priorytetu zadania lub wycofywanie się z zadań.
+    -   Ocena dzienna (w skali 1-10) wyliczana na podstawie powyższych metryk.
+    -   Personalizowane sugestie i porady (tips & tricks), które pomogą zniwelować powtarzające się problemy użytkownika.
+-   **FR-STATS-003:** Użytkownik musi mieć możliwość przeglądania historycznych raportów dziennych.
+-   **FR-STATS-004:** Aplikacja musi zbierać i przechowywać dane niezbędne do generowania raportów (czasy wykonania zadań, próby przerywania trybu skupienia, zmiany priorytetów).
+-   **FR-STATS-005:** Wszystkie operacje związane z datą i czasem (generowanie raportów, obliczanie czasu trwania zadań, rejestrowanie zdarzeń) muszą uwzględniać strefę czasową użytkownika.
+
+### 3.6. Prywatność (PRIV)
 -   **FR-PRIV-001:** Aplikacja musi posiadać i udostępniać użytkownikowi **Politykę Prywatności** oraz informację o wykorzystywaniu **cookies**, zgodnie z obowiązującymi przepisami (np. RODO), szczególnie w kontekście logowania Google i przechowywania danych zadań.
 
 ## 4. Granice projektu
@@ -75,18 +89,20 @@ Głównym problemem, który adresuje aplikacja **4focus**, są trudności ze sku
 -   Kategoryzacja zadań wg **Macierzy Eisenhowera** (część **FR-TASK-001**).
 -   Zmiana statusu zadań (**TODO**, **PENDING**, **DONE**) (**FR-TASK-004**, **FR-TASK-005**).
 -   Wyświetlanie czasu trwania zadania (**PENDING** -> **DONE**) (**FR-TASK-006**).
--   Widoki kalendarza (**Dzień**, **Tydzień**, **Miesiąc**, opcjonalnie zakres) (**FR-VIEW-001**, **FR-VIEW-002**, **FR-VIEW-003**).
--   Wyświetlanie zadań na liście pod kalendarzem, pogrupowanych i posortowanych wg kategorii (**FR-VIEW-004**, **FR-VIEW-005**, **FR-VIEW-006**).
+-   Prosty widok listy zadań (**FR-VIEW-001**, **FR-VIEW-002**).
+-   Wyświetlanie zadań na liście pogrupowanych i posortowanych wg kategorii (**FR-VIEW-004**, **FR-VIEW-005**, **FR-VIEW-006**).
 -   Podstawowe filtrowanie zadań (**FR-VIEW-007**).
 -   Wsparcie dla urządzeń mobilnych (**PWA**/**RWD**) (**FR-UI-001**, **FR-UI-002**).
 -   Minimalistyczny UI/UX (**FR-UI-003**).
--   **Tryb Skupienia (Focus Mode Screen)** dla zadań **PENDING** (**FR-UI-004**).
+-   **Tryb Skupienia (Focus Mode Screen)** dla zadań **PENDING** z funkcją blokera (**FR-UI-004**).
+-   Generowanie dziennych raportów statystyk (**FR-STATS-001**, **FR-STATS-002**, **FR-STATS-003**, **FR-STATS-004**, **FR-STATS-005**).
 -   Podstawowe śledzenie analityczne (**Google Analytics**) dla metryk sukcesu.
 
 ### 4.2. Poza zakresem MVP
 -   Raporty postępów użytkownika.
 -   Dodawanie zadań za pomocą interfejsu głosowego.
 -   Asystent AI do rozbijania kontekstu na zadania.
+-   Widoki kalendarza (dzienny, tygodniowy, miesięczny, niestandardowy zakres dat).
 -   Inne techniki organizacji zadań poza **Macierzą Eisenhowera**.
 -   Zaawansowane filtrowanie lub sortowanie zadań.
 -   Powiadomienia (push, email).
@@ -96,7 +112,7 @@ Głównym problemem, który adresuje aplikacja **4focus**, są trudności ze sku
 -   Dedykowany proces onboardingu użytkownika.
 -   Możliwość logowania/rejestracji za pomocą email/hasło lub innych dostawców (Facebook, etc.).
 -   Definiowanie i śledzenie szczegółowych wymagań niefunkcjonalnych (np. specyficzne progi wydajności, zaawansowane testy bezpieczeństwa poza standardowymi praktykami).
--   Dynamiczna regulacja wysokości widoku kalendarza/listy zadań.
+-   Dynamiczna regulacja wysokości widoku listy zadań.
 -   Zaawansowane opcje konfiguracji Trybu Skupienia (np. wybór animacji, dźwięków tła).
 
 ## 5. Historie użytkownika
@@ -184,37 +200,20 @@ Głównym problemem, który adresuje aplikacja **4focus**, są trudności ze sku
 -   **And:** Obliczony czas trwania zadania (od **PENDING** do **DONE**) zostanie wyświetlony przy zakończonym zadaniu na liście.
 *(Odnosi się do: FR-TASK-004, FR-TASK-005, FR-TASK-006, FR-UI-004)*
 
-### 5.3. Przeglądanie Zadań i Kalendarza (VIEW)
+### 5.3. Przeglądanie Zadań (VIEW)
 
-#### US-VIEW-001: Wyświetlanie zadań w widoku dziennym
-**Opis:** Jako użytkownik, chcę móc zobaczyć wszystkie moje zadania zaplanowane na dzisiaj, pogrupowane według kategorii **Macierzy Eisenhowera**, abym mógł skupić się na priorytetach dnia bieżącego.
+#### US-VIEW-001: Wyświetlanie listy zadań
+**Opis:** Jako użytkownik, chcę móc zobaczyć wszystkie moje zadania pogrupowane według kategorii **Macierzy Eisenhowera**, abym mógł skupić się na priorytetach i śledzić mój postęp.
 **Kryteria akceptacji:**
 -   **Given:** Użytkownik jest zalogowany w aplikacji i nie jest w Trybie Skupienia.
--   **When:** Użytkownik wybierze widok "**Dzień**" (lub jest to widok domyślny).
--   **Then:** Aplikacja wyświetli widok kalendarza dla bieżącego dnia (**FR-VIEW-001**, **FR-VIEW-002**).
--   **And:** Poniżej kalendarza zostanie wyświetlona lista zadań przypisanych do tego dnia (**FR-VIEW-004**).
+-   **Then:** Aplikacja automatycznie wyświetla listę wszystkich zadań użytkownika (**FR-VIEW-001**).
 -   **And:** Lista zadań będzie pogrupowana i posortowana według kategorii **Macierzy Eisenhowera** (kolejność: 1. Pilne/Ważne, 2. Ważne/Niepilne, 3. Pilne/Nieważne, 4. Nieważne/Niepilne - *do potwierdzenia*) (**FR-VIEW-006**).
 -   **And:** Każde zadanie na liście będzie wizualnie oznaczone swoją kategorią (**FR-VIEW-005**).
--   **And:** Jeśli na dany dzień nie ma zadań, zostanie wyświetlony odpowiedni komunikat (np. "Brak zadań na dzisiaj").
+-   **And:** Jeśli użytkownik nie ma żadnych zadań, zostanie wyświetlony odpowiedni komunikat (np. "Brak zadań").
 
-#### US-VIEW-002: Przełączanie widoków kalendarza (Tydzień, Miesiąc)
-**Opis:** Jako użytkownik, chcę móc przełączać widok kalendarza pomiędzy **dniem**, **tygodniem** i **miesiącem**, aby uzyskać różną perspektywę na moje zaplanowane zadania.
-**Kryteria akceptacji:**
--   **Given:** Użytkownik jest zalogowany, nie jest w Trybie Skupienia i widzi widok kalendarza (np. dzienny).
--   **When:** Użytkownik kliknie przycisk/opcję zmiany widoku na "**Tydzień**".
--   **Then:** Aplikacja wyświetli widok kalendarza dla bieżącego tygodnia (**FR-VIEW-001**, **FR-VIEW-002**).
--   **And:** Poniżej zostanie wyświetlona lista zadań przypisanych do tego tygodnia, pogrupowana i posortowana wg kategorii (**FR-VIEW-004**, **FR-VIEW-006**).
--   **When:** Użytkownik kliknie przycisk/opcję zmiany widoku na "**Miesiąc**".
--   **Then:** Aplikacja wyświetli widok kalendarza dla bieżącego miesiąca (**FR-VIEW-001**, **FR-VIEW-002**).
--   **And:** Poniżej zostanie wyświetlona lista zadań przypisanych do tego miesiąca, pogrupowana i posortowana wg kategorii (**FR-VIEW-004**, **FR-VIEW-006**).
+#### US-VIEW-002: [Usunięto - funkcjonalność poza zakresem MVP]
 
-#### US-VIEW-003: Wyświetlanie zadań dla niestandardowego zakresu dat (Opcjonalne)
-**Opis:** Jako użytkownik, chcę móc wybrać niestandardowy zakres dat w kalendarzu, aby zobaczyć zadania zaplanowane w tym konkretnym okresie.
-**Kryteria akceptacji:**
--   **Given:** Użytkownik jest zalogowany, nie jest w Trybie Skupienia i widzi widok kalendarza.
--   **When:** Użytkownik użyje komponentu wyboru zakresu dat (date-range picker) i wybierze datę początkową i końcową.
--   **Then:** Aplikacja wyświetli widok kalendarza obejmujący wybrany zakres (**FR-VIEW-001**, **FR-VIEW-003**).
--   **And:** Poniżej zostanie wyświetlona lista zadań przypisanych do wybranego zakresu dat, pogrupowana i posortowana wg kategorii (**FR-VIEW-004**, **FR-VIEW-006**).
+#### US-VIEW-003: [Usunięto - funkcjonalność poza zakresem MVP]
 
 #### US-VIEW-004: Wizualne rozróżnienie kategorii Eisenhowera
 **Opis:** Jako użytkownik, przeglądając listę zadań, chcę móc łatwo odróżnić zadania należące do różnych kategorii **Macierzy Eisenhowera** (np. za pomocą kolorów lub etykiet), aby szybko ocenić ich priorytet.
@@ -252,7 +251,7 @@ Głównym problemem, który adresuje aplikacja **4focus**, są trudności ze sku
 -   **Then:** Link do **Polityki Prywatności** jest łatwo dostępny.
 -   **And:** Kliknięcie linku otwiera stronę/dokument z treścią **Polityki Prywatności** (**FR-PRIV-001**).
 
-#### US-UI-003: Wejście w Tryb Skupienia i praca nad zadaniem (NOWE)
+#### US-UI-003: Wejście w Tryb Skupienia i praca nad zadaniem
 **Opis:** Jako użytkownik, który właśnie rozpoczął pracę nad zadaniem (oznaczył je jako **PENDING**), chcę, aby aplikacja przeszła w dedykowany **Tryb Skupienia** z minimalistycznym interfejsem i animacją, abym mógł się w pełni skoncentrować na wykonywanej czynności bez rozpraszaczy i otrzymać ostrzeżenie, jeśli spróbuję go opuścić przed zakończeniem.
 **Kryteria akceptacji:**
 -   **Given:** Użytkownik widzi zadanie ze statusem **TODO** na liście.
@@ -263,10 +262,49 @@ Głównym problemem, który adresuje aplikacja **4focus**, są trudności ze sku
 -   **And:** Dostępny jest wyraźny przycisk/opcja do oznaczenia zadania jako **DONE**.
 -   **Given:** Użytkownik jest w **Trybie Skupienia**.
 -   **When:** Użytkownik próbuje nawigować wstecz lub wykonać inną akcję opuszczenia trybu.
--   **Then:** Wyświetlany jest komunikat ostrzegawczy (np. "Skupienie na jednym zadaniu pomaga w efektywności. Czy na pewno chcesz teraz przerwać?").
+-   **Then:** Wyświetlany jest komunikat ostrzegawczy i elementy dodatkowego potwierdzenia, które aktywnie utrudniają użytkownikowi opuszczenie trybu skupienia.
 -   **Given:** Użytkownik jest w **Trybie Skupienia**.
 -   **When:** Użytkownik oznacza zadanie jako **DONE** za pomocą dostępnej opcji.
 -   **Then:** Status zadania zmienia się na **DONE** (zgodnie z **US-TASK-005**).
 -   **And:** **Tryb Skupienia** zostaje zamknięty.
 -   **And:** Użytkownik powraca do standardowego widoku aplikacji (np. listy zadań).
-*(Odnosi się do: FR-UI-004, FR-TASK-005)*
+-   **And:** System rejestruje wszelkie próby przerwania zadania do późniejszego raportowania.
+*(Odnosi się do: FR-UI-004, FR-TASK-005, FR-STATS-004)*
+
+### 5.5. Statystyki i Raportowanie (STATS)
+
+#### US-STATS-001: Generowanie dziennego raportu statystyk
+**Opis:** Jako użytkownik, chcę otrzymywać dzienny raport statystyk, abym mógł śledzić swoje postępy, identyfikować problemy w moim podejściu do zadań i otrzymywać wskazówki na przyszłość.
+**Kryteria akceptacji:**
+-   **Given:** Użytkownik korzystał z aplikacji w ciągu dnia (wykonał co najmniej jedno zadanie).
+-   **When:** Dzień się kończy (np. o północy lub przy pierwszym logowaniu następnego dnia).
+-   **Then:** Aplikacja automatycznie generuje dzienny raport statystyk.
+-   **And:** Raport zawiera średni czas wykonania zadań.
+-   **And:** Raport zawiera liczbę przypadków rozproszenia uwagi (próby wyjścia z Trybu Skupienia).
+-   **And:** Raport zawiera punkty karne za zmiany priorytetów lub wycofywanie się z zadań.
+-   **And:** Raport zawiera ocenę dnia w skali 1-10.
+-   **And:** Raport zawiera personalizowane sugestie i porady.
+-   **And:** Raport jest dostępny do przeglądania przez użytkownika.
+-   **And:** Wszystkie operacje czasowe w raporcie uwzględniają strefę czasową użytkownika.
+*(Odnosi się do: FR-STATS-001, FR-STATS-002, FR-STATS-005)*
+
+#### US-STATS-002: Przeglądanie historycznych raportów
+**Opis:** Jako użytkownik, chcę mieć możliwość przeglądania moich historycznych raportów dziennych, abym mógł analizować trendy i postępy w dłuższej perspektywie czasowej.
+**Kryteria akceptacji:**
+-   **Given:** Użytkownik jest zalogowany w aplikacji.
+-   **When:** Użytkownik wybiera opcję przeglądania historycznych raportów.
+-   **Then:** Aplikacja wyświetla listę dostępnych raportów dziennych.
+-   **And:** Użytkownik może wybrać konkretny raport do szczegółowego przeglądania.
+-   **And:** Wybrane raporty są wyświetlane w czytelnym formacie z wszystkimi zebranymi metrykami.
+-   **And:** Wszystkie daty i czasy w raportach są prezentowane zgodnie ze strefą czasową użytkownika.
+*(Odnosi się do: FR-STATS-003, FR-STATS-004, FR-STATS-005)*
+
+#### US-STATS-003: Poprawne uwzględnianie strefy czasowej
+**Opis:** Jako użytkownik korzystający z aplikacji w dowolnej strefie czasowej, chcę, aby wszystkie operacje związane z czasem (raportowanie, obliczanie czasu wykonania zadania) uwzględniały moją lokalną strefę czasową, aby dane były dokładne i zgodne z moim rzeczywistym doświadczeniem.
+**Kryteria akceptacji:**
+-   **Given:** Użytkownik jest zalogowany w aplikacji.
+-   **When:** System wykrywa lub użytkownik ustawia swoją strefę czasową.
+-   **Then:** Wszystkie operacje związane z czasem (zmiana statusu zadania, czas wykonania, generowanie raportów dziennych) są zapisywane i prezentowane zgodnie z lokalną strefą czasową użytkownika.
+-   **And:** Dzienne raporty są generowane o północy lokalnego czasu użytkownika.
+-   **And:** Jeśli użytkownik zmieni strefę czasową (np. w trakcie podróży), system odpowiednio dostosuje prezentację danych czasowych.
+*(Odnosi się do: FR-STATS-005, FR-TASK-006)*
