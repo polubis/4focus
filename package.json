@@ -11,6 +11,7 @@
     "fix:format": "npx @biomejs/biome format --write",
     "ci:lint": "npx @biomejs/biome lint",
     "ci:format": "npx @biomejs/biome format",
+    "ci:typecheck": "tsc --noEmit",
     "prepare": "husky",
     "supabase": "supabase"
   },

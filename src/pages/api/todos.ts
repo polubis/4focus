@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { supabase } from "../../db/supabase";
 import type { Database } from "../../db/database.types";
-import type { GetTodos } from "../../contracts";
+import type { GetTasks } from "../../contracts";
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -36,12 +36,14 @@ export const POST: APIRoute = async ({ request }) => {
       description,
       date,
       quadrant,
+      name,
     } = body as {
       status?: Database["public"]["Enums"]["todo_status"];
       title?: string;
       description?: string;
       date?: string;
       quadrant?: string;
+      name: string;
     };
 
     if (!title) {
@@ -56,14 +58,14 @@ export const POST: APIRoute = async ({ request }) => {
     const statusHistory = [{ status, timestamp: now }];
 
     const { data, error } = await supabase
-      .from("todos")
+      .from("tasks")
       .insert({
         user_id,
         status,
         created_at: now,
         updated_at: now,
         status_history: statusHistory,
-        title,
+        name,
         description,
         due_date: date,
         quadrant,
@@ -118,7 +120,7 @@ export const GET: APIRoute = async ({ request }) => {
     const user_id = userData.user.id;
 
     const { data, error } = await supabase
-      .from("todos")
+      .from("tasks")
       .select("*")
       .eq("user_id", user_id)
       .order("created_at", { ascending: false });
@@ -131,13 +133,15 @@ export const GET: APIRoute = async ({ request }) => {
       });
     }
 
-    const dto: GetTodos["dto"] = data.map((todo) => ({
+    const dto: GetTasks["dto"] = data.map((todo) => ({
       id: todo.id,
       status: todo.status,
       created_at: todo.created_at,
       updated_at: todo.updated_at,
       status_history: todo.status_history,
       user_id: todo.user_id,
+      name: todo.name,
+      description: todo.description,
     }));
 
     return new Response(JSON.stringify(dto), {
