@@ -1,7 +1,8 @@
 ---
 import MainLayout from "../layouts/main.layout.astro";
+import { HomeView } from "../views/home";
 ---
 
 <MainLayout>
-	home page
+	<HomeView client:load />
 </MainLayout>
