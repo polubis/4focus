@@ -1,5 +1,6 @@
 import { useState, type FormEvent, type ChangeEvent } from "react";
 import { supabase } from "../db/supabase";
+import { Button } from "../ui/button";
 
 interface FormErrors {
   email: string;
@@ -121,7 +122,7 @@ export const SigninForm = () => {
             <p className="text-sm text-red-600 mt-1">{errors.password}</p>
           )}
         </div>
-
+        <Button>Hi</Button>
         <button
           type="submit"
           className="w-full bg-primary text-primary-foreground hover:bg-primary/90 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"

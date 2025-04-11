@@ -4,11 +4,24 @@
   :root {
     --background: 48 33% 97%;
     --foreground: 220 3% 20%;
+
+    --primary: 220 3% 20%;
+    --primary-foreground: 48 33% 97%;
   }
 
   body {
-    background-color: hsl(var(--background));
+    background: hsl(var(--background));
     color: hsl(var(--foreground));
     @apply antialiased;
+  }
+}
+
+@layer utilities {
+  .bg-primary {
+    background: hsl(var(--primary));
+  }
+
+  .text-primary-foreground {
+    color: hsl(var(--primary-foreground));
   }
 }
