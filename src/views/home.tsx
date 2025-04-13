@@ -1,10 +1,10 @@
-import { Play } from "lucide-react";
-import { AuthProvider } from "../context/auth";
+import { AuthProvider, useAuthContext } from "../context/auth";
 import { Button } from "../ui/button";
 import { AccordionTrigger } from "../ui/accordion";
 import { AccordionItem } from "../ui/accordion";
 import { Accordion } from "../ui/accordion";
 import { AccordionContent } from "../ui/accordion";
+import { navigate } from "astro:transitions/client";
 
 const ADHDAnimation = () => {
   return (
@@ -193,144 +193,156 @@ const ADHDAnimation = () => {
   );
 };
 
+const HomeViewContent = () => {
+  const { user } = useAuthContext();
+
+  return (
+    <main className="p-4 min-h-screen relative flex items-center justify-center z-10">
+      <ADHDAnimation />
+      <div className="flex flex-col gap-4 max-w-lg">
+        <h1 className="text-3xl md:text-6xl font-bold text-center">
+          Fight With ADHD. <br /> Get Things Done!
+        </h1>
+        <p className="text-center text-lg md:text-2xl">
+          Eliminate distractions and <strong>focus on your work</strong>. <br />{" "}
+          Only on your work...
+        </p>
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger>What is ADHD?</AccordionTrigger>
+            <AccordionContent>
+              ADHD (Attention-Deficit/Hyperactivity Disorder) is a
+              neurodevelopmental disorder, meaning it originates from
+              differences in brain development and function. It's not a lack of
+              willpower or a character flaw. ADHD primarily affects the brain's
+              executive functions, which include skills like planning,
+              organization, time management, working memory, emotional
+              regulation, and importantly, attention regulation and impulse
+              control. It typically presents with a persistent pattern of
+              inattention (difficulty sustaining focus, easily distracted,
+              forgetful) and/or hyperactivity-impulsivity (restlessness,
+              fidgeting, acting without thinking, interrupting others). ADHD
+              exists on a spectrum, affects people across the lifespan (not just
+              children), and can manifest differently in each individual.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger>Why it's so hard to focus?</AccordionTrigger>
+            <AccordionContent>
+              <p className="mb-2">
+                Difficulty focusing with ADHD stems directly from differences in
+                brain wiring and neurochemistry, particularly involving
+                neurotransmitters like dopamine and norepinephrine which are
+                crucial for regulating attention and executive functions. This
+                means the ADHD brain struggles with:
+              </p>
+              <ul className="flex flex-col gap-2">
+                <li>
+                  <strong>Attention Regulation: </strong>
+                  Not necessarily a lack of attention, but difficulty
+                  controlling it. It's hard to filter out irrelevant stimuli
+                  (internal thoughts or external noises/visuals) and sustain
+                  focus on tasks that aren't inherently highly stimulating or
+                  novel.
+                </li>
+                <li>
+                  <strong>Interest-Driven Attention: </strong>
+                  Focus often depends heavily on interest level. Tasks perceived
+                  as boring or requiring sustained mental effort are
+                  disproportionately difficult, while highly engaging activities
+                  can sometimes lead to intense hyperfocus.
+                </li>
+                <li>
+                  <strong>Working Memory Challenges: </strong> Holding
+                  information in mind while performing complex tasks is often
+                  harder, making it easy to lose track of steps or forget
+                  instructions.
+                </li>
+                <li>
+                  <strong>Executive Function Overload: </strong> Initiating
+                  tasks, planning steps, and resisting distractions requires
+                  significant mental effort, leading to fatigue and difficulty
+                  maintaining focus over time. It's a genuine neurological
+                  challenge, not laziness or lack of effort.
+                </li>
+                <li>
+                  <strong>Impulse Control: </strong>
+                  Difficulty resisting immediate distractions or impulses,
+                  leading to frequent interruptions and difficulty staying on
+                  task.
+                </li>
+                <li>
+                  <strong>Executive Function Overload: </strong> Initiating
+                  tasks, planning steps, and resisting distractions requires
+                  significant mental effort, leading to fatigue and difficulty
+                  maintaining focus over time. It's a genuine neurological
+                  challenge, not laziness or lack of effort.
+                </li>
+              </ul>
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-3">
+            <AccordionTrigger>How this app helps you?</AccordionTrigger>
+            <AccordionContent>
+              <p className="mb-2">
+                Application has been made to block your distractions and help
+                you focus on your work. It allows you to only with your tasks to
+                achieve the best results. It's using techniques described in{" "}
+                <a
+                  className="underline"
+                  target="_blank"
+                  href="https://4markdown.com/how-to-be-productive-as-a-software-engineer/"
+                  rel="noreferrer"
+                >
+                  How to be productive as a software engineer
+                </a>
+                .
+              </p>
+              <ul className="flex flex-col gap-2">
+                <li>
+                  <strong>Simplified, Distraction-Free Interface:</strong> Our
+                  clean design minimizes visual clutter (like a black & white
+                  approach), removing unnecessary elements so you can
+                  concentrate solely on your core tasks without visual noise.
+                </li>
+                <li>
+                  <strong>Track Your Focus & Progress:</strong> Monitor your
+                  completed tasks, focused work sessions, and productivity
+                  trends over time. Seeing your achievements provides motivation
+                  and helps you understand your work patterns.
+                </li>
+                <li>
+                  <strong>Promotes Focused Single-Tasking:</strong> The app
+                  encourages tackling tasks sequentially (one by one), helping
+                  you avoid the mental fatigue and reduced efficiency that comes
+                  from constant context-switching and multitasking.
+                </li>
+                <li>
+                  <strong>Provides Insight into Distraction Patterns:</strong>{" "}
+                  Gain awareness when you attempt to navigate away from your
+                  task or access blocked sites/apps. This feedback helps you
+                  recognize and consciously correct distracting habits over
+                  time.
+                </li>
+              </ul>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+        <Button
+          className="mt-8"
+          onClick={() => navigate(user ? "/tasks" : "/sign-in")}
+        >
+          Start your ADHD Therapy
+        </Button>
+      </div>
+    </main>
+  );
+};
+
 export const HomeView = () => {
   return (
     <AuthProvider>
-      <main className="p-4 min-h-screen relative flex items-center justify-center z-10">
-        <ADHDAnimation />
-        <div className="flex flex-col gap-4 max-w-lg">
-          <h1 className="text-3xl md:text-6xl font-bold text-center">
-            Fight With ADHD. <br /> Get Things Done!
-          </h1>
-          <p className="text-center text-lg md:text-2xl">
-            Eliminate distractions and <strong>focus on your work</strong>.{" "}
-            <br /> Only on your work...
-          </p>
-          <Accordion type="single" collapsible>
-            <AccordionItem value="item-1">
-              <AccordionTrigger>What is ADHD?</AccordionTrigger>
-              <AccordionContent>
-                ADHD (Attention-Deficit/Hyperactivity Disorder) is a
-                neurodevelopmental disorder, meaning it originates from
-                differences in brain development and function. It's not a lack
-                of willpower or a character flaw. ADHD primarily affects the
-                brain's executive functions, which include skills like planning,
-                organization, time management, working memory, emotional
-                regulation, and importantly, attention regulation and impulse
-                control. It typically presents with a persistent pattern of
-                inattention (difficulty sustaining focus, easily distracted,
-                forgetful) and/or hyperactivity-impulsivity (restlessness,
-                fidgeting, acting without thinking, interrupting others). ADHD
-                exists on a spectrum, affects people across the lifespan (not
-                just children), and can manifest differently in each individual.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2">
-              <AccordionTrigger>Why it's so hard to focus?</AccordionTrigger>
-              <AccordionContent>
-                <p className="mb-2">
-                  Difficulty focusing with ADHD stems directly from differences
-                  in brain wiring and neurochemistry, particularly involving
-                  neurotransmitters like dopamine and norepinephrine which are
-                  crucial for regulating attention and executive functions. This
-                  means the ADHD brain struggles with:
-                </p>
-                <ul className="flex flex-col gap-2">
-                  <li>
-                    <strong>Attention Regulation: </strong>
-                    Not necessarily a lack of attention, but difficulty
-                    controlling it. It's hard to filter out irrelevant stimuli
-                    (internal thoughts or external noises/visuals) and sustain
-                    focus on tasks that aren't inherently highly stimulating or
-                    novel.
-                  </li>
-                  <li>
-                    <strong>Interest-Driven Attention: </strong>
-                    Focus often depends heavily on interest level. Tasks
-                    perceived as boring or requiring sustained mental effort are
-                    disproportionately difficult, while highly engaging
-                    activities can sometimes lead to intense hyperfocus.
-                  </li>
-                  <li>
-                    <strong>Working Memory Challenges: </strong> Holding
-                    information in mind while performing complex tasks is often
-                    harder, making it easy to lose track of steps or forget
-                    instructions.
-                  </li>
-                  <li>
-                    <strong>Executive Function Overload: </strong> Initiating
-                    tasks, planning steps, and resisting distractions requires
-                    significant mental effort, leading to fatigue and difficulty
-                    maintaining focus over time. It's a genuine neurological
-                    challenge, not laziness or lack of effort.
-                  </li>
-                  <li>
-                    <strong>Impulse Control: </strong>
-                    Difficulty resisting immediate distractions or impulses,
-                    leading to frequent interruptions and difficulty staying on
-                    task.
-                  </li>
-                  <li>
-                    <strong>Executive Function Overload: </strong> Initiating
-                    tasks, planning steps, and resisting distractions requires
-                    significant mental effort, leading to fatigue and difficulty
-                    maintaining focus over time. It's a genuine neurological
-                    challenge, not laziness or lack of effort.
-                  </li>
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3">
-              <AccordionTrigger>How this app helps you?</AccordionTrigger>
-              <AccordionContent>
-                <p className="mb-2">
-                  Application has been made to block your distractions and help
-                  you focus on your work. It allows you to only with your tasks
-                  to achieve the best results. It's using techniques described
-                  in{" "}
-                  <a
-                    className="underline"
-                    target="_blank"
-                    href="https://4markdown.com/how-to-be-productive-as-a-software-engineer/"
-                    rel="noreferrer"
-                  >
-                    How to be productive as a software engineer
-                  </a>
-                  .
-                </p>
-                <ul className="flex flex-col gap-2">
-                  <li>
-                    <strong>Simplified, Distraction-Free Interface:</strong> Our
-                    clean design minimizes visual clutter (like a black & white
-                    approach), removing unnecessary elements so you can
-                    concentrate solely on your core tasks without visual noise.
-                  </li>
-                  <li>
-                    <strong>Track Your Focus & Progress:</strong> Monitor your
-                    completed tasks, focused work sessions, and productivity
-                    trends over time. Seeing your achievements provides
-                    motivation and helps you understand your work patterns.
-                  </li>
-                  <li>
-                    <strong>Promotes Focused Single-Tasking:</strong> The app
-                    encourages tackling tasks sequentially (one by one), helping
-                    you avoid the mental fatigue and reduced efficiency that
-                    comes from constant context-switching and multitasking.
-                  </li>
-                  <li>
-                    <strong>Provides Insight into Distraction Patterns:</strong>{" "}
-                    Gain awareness when you attempt to navigate away from your
-                    task or access blocked sites/apps. This feedback helps you
-                    recognize and consciously correct distracting habits over
-                    time.
-                  </li>
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-          <Button className="mt-8">Start your ADHD Therapy</Button>
-        </div>
-      </main>
+      <HomeViewContent />
     </AuthProvider>
   );
 };

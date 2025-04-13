@@ -7,13 +7,19 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "fix:lint": "npx @biomejs/biome lint --fix",
+    "fix:lint": "npx @biomejs/biome lint --write",
     "fix:format": "npx @biomejs/biome format --write",
     "ci:lint": "npx @biomejs/biome lint",
     "ci:format": "npx @biomejs/biome format",
     "ci:typecheck": "tsc --noEmit",
     "prepare": "husky",
-    "supabase": "supabase"
+    "db:reset": "npx supabase db reset",
+    "db:start": "npx supabase start",
+    "db:stop": "npx supabase stop",
+    "db:migration:new": "npx supabase migration new",
+    "db:migration:update": "npx supabase db push",
+    "db:remigrate": "npx supabase migration up",
+    "db:typegen": "npx supabase gen types typescript --local > src/db/database.types.ts"
   },
   "dependencies": {
     "@astrojs/react": "^4.2.3",

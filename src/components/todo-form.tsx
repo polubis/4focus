@@ -30,8 +30,6 @@ export const TodoForm = () => {
       hasError = true;
     }
 
-    setErrors(newErrors);
-
     if (!hasError) {
       // Get the session from Supabase
       const { data: sessionData } = await supabase.auth.getSession();
@@ -41,35 +39,23 @@ export const TodoForm = () => {
         return;
       }
 
-      // Map quadrant values to status
-      const status: "todo" | "pending" | "done" = "todo";
-
       // Submit to the API
-      const response = await fetch("/api/todos", {
+      const response = await fetch("/api/tasks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${sessionData.session.access_token}`,
         },
         body: JSON.stringify({
-          title,
-          description,
-          date,
-          quadrant,
-          status,
+          name: title,
         }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        alert(`Error creating task: ${errorData.error}`);
+        alert(`Error creating task: ${JSON.stringify(errorData)}`);
       } else {
         alert("Task created successfully!");
-        // Reset the form
-        setTitle("");
-        setDescription("");
-        setDate("");
-        setQuadrant("urgent-important");
       }
     }
   };

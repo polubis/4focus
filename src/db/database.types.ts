@@ -36,33 +36,33 @@ export type Database = {
     Tables: {
       tasks: {
         Row: {
-          created_at: string;
+          c_date: string;
           description: string | null;
           id: number;
+          m_date: string;
           name: string;
-          status: Database["public"]["Enums"]["todo_status"];
+          status: Database["public"]["Enums"]["task_status"];
           status_history: Json;
-          updated_at: string;
           user_id: string;
         };
         Insert: {
-          created_at?: string;
+          c_date?: string;
           description?: string | null;
           id?: number;
+          m_date?: string;
           name: string;
-          status?: Database["public"]["Enums"]["todo_status"];
+          status?: Database["public"]["Enums"]["task_status"];
           status_history?: Json;
-          updated_at?: string;
-          user_id?: string;
+          user_id: string;
         };
         Update: {
-          created_at?: string;
+          c_date?: string;
           description?: string | null;
           id?: number;
+          m_date?: string;
           name?: string;
-          status?: Database["public"]["Enums"]["todo_status"];
+          status?: Database["public"]["Enums"]["task_status"];
           status_history?: Json;
-          updated_at?: string;
           user_id?: string;
         };
         Relationships: [];
@@ -75,7 +75,7 @@ export type Database = {
       [_ in never]: never;
     };
     Enums: {
-      todo_status: "todo" | "pending" | "done";
+      task_status: "todo" | "pending" | "done";
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -194,7 +194,7 @@ export const Constants = {
   },
   public: {
     Enums: {
-      todo_status: ["todo", "pending", "done"],
+      task_status: ["todo", "pending", "done"],
     },
   },
 } as const;
