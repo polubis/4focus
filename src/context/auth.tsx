@@ -1,4 +1,4 @@
-import type { User } from "@supabase/supabase-js";
+import type { Session } from "@supabase/supabase-js";
 import {
   createContext,
   useContext,
@@ -9,16 +9,22 @@ import {
 import { supabase } from "@/db/supabase";
 import { assert } from "@/lib/assert";
 
-const AuthContext = createContext<{ user: User | undefined } | null>(null);
+type AuthContextValue = {
+  session: Session | null;
+};
+
+const AuthContext = createContext<AuthContextValue>({
+  session: null,
+});
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | undefined>();
+  const [session, setSession] = useState<AuthContextValue["session"]>(null);
 
   useEffect(() => {
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user);
+    } = supabase.auth.onAuthStateChange((_, session) => {
+      setSession(session);
     });
 
     return () => {
@@ -26,13 +32,16 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
   }, []);
 
-  return <AuthContext value={{ user }}>{children}</AuthContext>;
+  return <AuthContext value={{ session }}>{children}</AuthContext>;
 };
 
 const useAuthContext = () => {
   const context = useContext(AuthContext);
 
-  assert(context, "useAuthContext must be used within an AuthProvider");
+  assert(
+    context,
+    `${useAuthContext.name} must be used within an ${AuthProvider.name}`,
+  );
 
   return context;
 };

@@ -25,23 +25,39 @@ import {
   TASKS_PRIORITY_VALUES,
   type PostTask,
 } from "@/contracts";
+import { AuthProvider, useAuthContext } from "@/context/auth";
+import { endpoint } from "@/lib/endpoint";
 
-type TaskFormValues = PostTask["payload"];
+const TasksViewContent = () => {
+  const { session } = useAuthContext();
 
-const TaskForm = () => {
-  const form = useForm<TaskFormValues>({
+  const form = useForm<PostTask["payload"]>({
     resolver: zodResolver(postTaskPayloadSchema),
     defaultValues: {
       name: "",
-      description: "",
       priority: "1",
     },
   });
 
-  const onSubmit = (values: TaskFormValues) => {};
+  const onSubmit = async (values: PostTask["payload"]) => {
+    const [ok, data] = await endpoint(
+      "create_task",
+      values,
+      session?.access_token,
+    );
+
+    if (ok) {
+      alert(JSON.stringify(data));
+    } else {
+      alert(JSON.stringify(data));
+    }
+  };
 
   return (
-    <main className="p-4 min-h-screen flex items-center justify-center">
+    <main className="p-4 min-h-screen flex items-center justify-center flex-col gap-8 max-w-lg mx-auto">
+      <h1 className="text-center capitalize text-4xl font-extrabold tracking-tight lg:text-5xl">
+        Create a new task
+      </h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -119,4 +135,12 @@ const TaskForm = () => {
   );
 };
 
-export { TaskForm };
+const TasksView = () => {
+  return (
+    <AuthProvider>
+      <TasksViewContent />
+    </AuthProvider>
+  );
+};
+
+export { TasksView };

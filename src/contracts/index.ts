@@ -24,9 +24,14 @@ const TASKS_PRIORITY_VALUES = ["1", "2", "3", "4"] as const;
 
 const postTaskPayloadSchema = z
   .object({
-    name: z.string().min(1, "Name is required").max(200, "Name is too long"),
+    name: z
+      .string()
+      .trim()
+      .min(1, "Name is required")
+      .max(200, "Name is too long"),
     description: z
       .string()
+      .trim()
       .min(10, "Description is too short")
       .max(500, "Description is too long")
       .optional(),

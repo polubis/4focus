@@ -72,6 +72,7 @@ export const POST: APIRoute = async ({ request }) => {
       name: payload.data.name,
       user_id: user.id,
       priority: payload.data.priority,
+      description: payload.data.description,
     };
 
     const { data: insertedTask, error: insertError } = await supabase

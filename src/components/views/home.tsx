@@ -194,16 +194,16 @@ const ADHDAnimation = () => {
 };
 
 const HomeViewContent = () => {
-  const { user } = useAuthContext();
+  const { session } = useAuthContext();
 
   return (
     <main className="p-4 min-h-screen relative flex items-center justify-center z-10">
       <ADHDAnimation />
       <div className="flex flex-col gap-4 max-w-lg">
-        <h1 className="text-3xl md:text-6xl font-bold text-center">
-          Fight With ADHD. <br /> Get Things Done!
+        <h1 className="text-center capitalize text-4xl font-extrabold tracking-tight lg:text-5xl">
+          Fight with ADHD. <br /> Get things done!
         </h1>
-        <p className="text-center text-lg md:text-2xl">
+        <p className="text-center leading-7">
           Eliminate distractions and <strong>focus on your work</strong>. <br />{" "}
           Only on your work...
         </p>
@@ -330,7 +330,7 @@ const HomeViewContent = () => {
         </Accordion>
         <Button
           className="mt-8"
-          onClick={() => navigate(user ? "/tasks" : "/sign-in")}
+          onClick={() => navigate(session ? "/tasks" : "/sign-in")}
         >
           Start your ADHD Therapy
         </Button>
