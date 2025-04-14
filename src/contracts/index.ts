@@ -24,7 +24,8 @@ type GetTasks = {
     | { type: `unauthorized`; message: string; code: 401 }
     | { type: `forbidden`; message: string; code: 403 }
     | { type: `not_found`; message: string; code: 404 }
-    | { type: `internal_server_error`; message: string; code: 500 };
+    | { type: `internal_server_error`; message: string; code: 500 }
+    | { type: `client_error`; message: string; code: 0 };
 };
 
 const TASKS_PRIORITY_VALUES = ["1", "2", "3", "4"] as const;
@@ -71,7 +72,8 @@ type PostTask = {
     | { type: `unauthorized`; message: string; code: 401 }
     | { type: `forbidden`; message: string; code: 403 }
     | { type: `unprocessable_entity`; message: string; code: 422 }
-    | { type: `internal_server_error`; message: string; code: 500 };
+    | { type: `internal_server_error`; message: string; code: 500 }
+    | { type: `client_error`; message: string; code: 0 };
 };
 
 export { postTaskPayloadSchema, TASKS_PRIORITY_VALUES };

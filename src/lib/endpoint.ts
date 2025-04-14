@@ -21,9 +21,10 @@ const CONFIG = {
   { method: "POST" | "GET" | "PUT" | "DELETE"; url: string }
 >;
 
-type ParsedError<TType extends Endpoints["type"]> =
-  | Extract<Endpoints, { type: TType }>["contract"]["error"]
-  | { type: `client_error`; message: string; code: 0 };
+type ParsedError<TType extends Endpoints["type"]> = Extract<
+  Endpoints,
+  { type: TType }
+>["contract"]["error"];
 
 const endpoint = async <TType extends Endpoints["type"]>(
   type: TType,

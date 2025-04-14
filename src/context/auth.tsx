@@ -1,11 +1,5 @@
 import type { Session } from "@supabase/supabase-js";
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  type ReactNode,
-} from "react";
+import React from "react";
 import { supabase } from "@/db/supabase";
 import { assert } from "@/lib/assert";
 
@@ -13,14 +7,15 @@ type AuthContextValue = {
   session: Session | null;
 };
 
-const AuthContext = createContext<AuthContextValue>({
+const AuthContext = React.createContext<AuthContextValue>({
   session: null,
 });
 
-const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [session, setSession] = useState<AuthContextValue["session"]>(null);
+const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [session, setSession] =
+    React.useState<AuthContextValue["session"]>(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_, session) => {
@@ -36,7 +31,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 };
 
 const useAuthContext = () => {
-  const context = useContext(AuthContext);
+  const context = React.useContext(AuthContext);
 
   assert(
     context,
