@@ -20,6 +20,8 @@ type GetTasks = {
   >[];
 };
 
+const TASKS_PRIORITY_VALUES = ["1", "2", "3", "4"] as const;
+
 const postTaskPayloadSchema = z
   .object({
     name: z.string().min(1, "Name is required").max(200, "Name is too long"),
@@ -28,6 +30,7 @@ const postTaskPayloadSchema = z
       .min(10, "Description is too short")
       .max(500, "Description is too long")
       .optional(),
+    priority: z.enum(TASKS_PRIORITY_VALUES),
   })
   .strict();
 
@@ -43,6 +46,7 @@ type PostTask = {
       | "name"
       | "c_date"
       | "m_date"
+      | "priority"
     >
   >;
   payload: z.infer<typeof postTaskPayloadSchema>;
@@ -58,5 +62,5 @@ type PostTask = {
     | { type: `internal_server_error`; message: string; code: 500 };
 };
 
-export { postTaskPayloadSchema };
+export { postTaskPayloadSchema, TASKS_PRIORITY_VALUES };
 export type { GetTasks, PostTask };

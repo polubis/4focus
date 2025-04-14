@@ -17,8 +17,7 @@
     "db:start": "npx supabase start",
     "db:stop": "npx supabase stop",
     "db:migration:new": "npx supabase migration new",
-    "db:migration:update": "npx supabase db push",
-    "db:remigrate": "npx supabase migration up",
+    "db:migration:update": "npx supabase migration up",
     "db:typegen": "npx supabase gen types typescript --local > src/db/database.types.ts"
   },
   "dependencies": {

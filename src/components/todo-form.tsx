@@ -48,6 +48,7 @@ export const TodoForm = () => {
         },
         body: JSON.stringify({
           name: title,
+          priority: "1",
         }),
       });
 

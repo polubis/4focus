@@ -41,6 +41,7 @@ export type Database = {
           id: number;
           m_date: string;
           name: string;
+          priority: Database["public"]["Enums"]["task_priority"];
           status: Database["public"]["Enums"]["task_status"];
           status_history: Json;
           user_id: string;
@@ -51,6 +52,7 @@ export type Database = {
           id?: number;
           m_date?: string;
           name: string;
+          priority: Database["public"]["Enums"]["task_priority"];
           status?: Database["public"]["Enums"]["task_status"];
           status_history?: Json;
           user_id: string;
@@ -61,6 +63,7 @@ export type Database = {
           id?: number;
           m_date?: string;
           name?: string;
+          priority?: Database["public"]["Enums"]["task_priority"];
           status?: Database["public"]["Enums"]["task_status"];
           status_history?: Json;
           user_id?: string;
@@ -75,6 +78,7 @@ export type Database = {
       [_ in never]: never;
     };
     Enums: {
+      task_priority: "1" | "2" | "3" | "4";
       task_status: "todo" | "pending" | "done";
     };
     CompositeTypes: {
@@ -194,6 +198,7 @@ export const Constants = {
   },
   public: {
     Enums: {
+      task_priority: ["1", "2", "3", "4"],
       task_status: ["todo", "pending", "done"],
     },
   },

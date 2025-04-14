@@ -71,6 +71,7 @@ export const POST: APIRoute = async ({ request }) => {
     const newTask: Database["public"]["Tables"]["tasks"]["Insert"] = {
       name: payload.data.name,
       user_id: user.id,
+      priority: payload.data.priority,
     };
 
     const { data: insertedTask, error: insertError } = await supabase
@@ -101,6 +102,7 @@ export const POST: APIRoute = async ({ request }) => {
       description: insertedTask.description,
       status_history: insertedTask.status_history,
       user_id: insertedTask.user_id,
+      priority: insertedTask.priority,
     };
 
     return new Response(JSON.stringify(dto), {
