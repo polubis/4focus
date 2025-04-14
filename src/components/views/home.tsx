@@ -4,7 +4,7 @@ import { AccordionTrigger } from "@/components/ui/accordion";
 import { AccordionItem } from "@/components/ui/accordion";
 import { Accordion } from "@/components/ui/accordion";
 import { AccordionContent } from "@/components/ui/accordion";
-import { navigate } from "astro:transitions/client";
+import { navigate } from "@/lib/navigate";
 
 const ADHDAnimation = () => {
   return (
@@ -330,7 +330,7 @@ const HomeViewContent = () => {
         </Accordion>
         <Button
           className="mt-8"
-          onClick={() => navigate(session ? "/tasks" : "/sign-in")}
+          onClick={() => navigate(session ? "new_task" : "sign_in")}
         >
           Start your ADHD Therapy
         </Button>

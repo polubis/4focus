@@ -34,19 +34,31 @@ const endpoint = async <TType extends Endpoints["type"]>(
   | [false, ParsedError<TType>]
 > => {
   try {
-    const response = await fetch(CONFIG[type].url, {
-      method: CONFIG[type].method,
-      headers:
-        typeof authToken === "string"
-          ? {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${authToken}`,
-            }
-          : {
-              "Content-Type": "application/json",
-            },
-      body: JSON.stringify(payload),
-    });
+    const method = CONFIG[type].method;
+    const url = CONFIG[type].url;
+    const headers: HeadersInit =
+      typeof authToken === "string"
+        ? {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          }
+        : {
+            "Content-Type": "application/json",
+          };
+
+    const response = await fetch(
+      url,
+      method === "GET"
+        ? {
+            method,
+            headers,
+          }
+        : {
+            method,
+            headers,
+            body: JSON.stringify(payload),
+          },
+    );
 
     const data = await response.json();
 

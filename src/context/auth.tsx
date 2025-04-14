@@ -46,4 +46,12 @@ const useAuthContext = () => {
   return context;
 };
 
-export { AuthProvider, useAuthContext };
+const useAuthContextSession = () => {
+  const context = useAuthContext();
+
+  assert(context.session, "No session found");
+
+  return context.session;
+};
+
+export { AuthProvider, useAuthContext, useAuthContextSession };
