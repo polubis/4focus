@@ -27,6 +27,7 @@ import {
 } from "@/contracts";
 import { AuthProvider, useAuthContext } from "@/context/auth";
 import { endpoint } from "@/lib/endpoint";
+import { navigate } from "astro:transitions/client";
 
 const TasksViewContent = () => {
   const { session } = useAuthContext();
@@ -67,7 +68,7 @@ const TasksViewContent = () => {
               <FormItem>
                 <FormLabel>Task Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="E.g. Fix login bug" {...field} />
+                  <Input {...field} placeholder="E.g. Fix login bug" />
                 </FormControl>
                 <FormDescription>Short, concise task name</FormDescription>
                 <FormMessage />
@@ -83,10 +84,17 @@ const TasksViewContent = () => {
                 <FormLabel>Description (Optional)</FormLabel>
                 <FormControl>
                   <Textarea
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(
+                        e.target.value.trim() === ""
+                          ? undefined
+                          : e.target.value,
+                      );
+                    }}
+                    value={field.value ?? ""}
                     placeholder="Describe task details, steps to complete, etc. (min. 10 characters, if provided)"
                     className="resize-none"
-                    {...field}
-                    value={field.value ?? ""}
                   />
                 </FormControl>
                 <FormDescription>
@@ -138,7 +146,16 @@ const TasksViewContent = () => {
             )}
           />
 
-          <Button type="submit">Create Task</Button>
+          <footer className="justify-end flex gap-4">
+            <Button
+              variant="secondary"
+              type="button"
+              onClick={() => navigate("/")}
+            >
+              Back
+            </Button>
+            <Button type="submit">Create Task</Button>
+          </footer>
         </form>
       </Form>
     </main>

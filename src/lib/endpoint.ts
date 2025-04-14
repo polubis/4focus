@@ -1,18 +1,23 @@
-import type { PostTask } from "@/contracts";
-import { supabase } from "@/db/supabase";
+import type { GetTasks, PostTask } from "@/contracts";
 
-type Endpoints = {
-  type: "create_task";
-  contract: PostTask;
-};
+type Endpoints =
+  | {
+      type: "create_task";
+      contract: PostTask;
+    }
+  | { type: "get_tasks"; contract: GetTasks };
 
 const CONFIG = {
   create_task: {
     method: "POST",
     url: "/api/tasks",
   },
+  get_tasks: {
+    method: "GET",
+    url: "/api/tasks",
+  },
 } satisfies Record<
-  Endpoints["type"],
+  string,
   { method: "POST" | "GET" | "PUT" | "DELETE"; url: string }
 >;
 

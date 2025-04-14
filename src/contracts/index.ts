@@ -16,8 +16,15 @@ type GetTasks = {
       | "name"
       | "c_date"
       | "m_date"
+      | "priority"
     >
   >[];
+  payload: null;
+  error:
+    | { type: `unauthorized`; message: string; code: 401 }
+    | { type: `forbidden`; message: string; code: 403 }
+    | { type: `not_found`; message: string; code: 404 }
+    | { type: `internal_server_error`; message: string; code: 500 };
 };
 
 const TASKS_PRIORITY_VALUES = ["1", "2", "3", "4"] as const;
