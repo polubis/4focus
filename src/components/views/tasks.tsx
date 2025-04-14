@@ -6,11 +6,11 @@ import {
 import type { GetTasks } from "@/contracts";
 import { endpoint } from "@/lib/endpoint";
 import { useEffect, useState } from "react";
-import { format, parseISO } from "date-fns";
-import { Button } from "../ui/button";
-import { MessageSquareWarning, Plus } from "lucide-react";
-import { Input } from "../ui/input";
-import { Skeleton } from "../ui/skeleton";
+import { formatDistanceToNow, parseISO } from "date-fns";
+import { Button } from "@/components/ui/button";
+import { Check, Clock, MessageSquareWarning, Plus } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -19,8 +19,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { getRoute, navigate } from "@/lib/navigate";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { getRoute } from "@/lib/navigate";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const ScreenLoader = () => {
   return (
@@ -56,7 +56,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      <main className="py-2 px-3 flex items-center justify-center">
+      <main className="py-4 px-3 flex items-center justify-center">
         {children}
       </main>
       <footer className="px-3 flex items-center sticky bottom-0 left-0 bg-background border-t border-t-accent">
@@ -76,9 +76,42 @@ type TasksResult =
   | ["ok", GetTasks["dto"]]
   | ["fail", GetTasks["error"]];
 
+const PRIORITY_LABELS = {
+  1: "Urgent",
+  2: "High",
+  3: "Medium",
+  4: "Low",
+} satisfies Record<GetTasks["dto"][number]["priority"], string>;
+
+const FocusScreen = ({
+  name,
+  description,
+}: Pick<GetTasks["dto"][number], "name" | "description">) => {
+  return (
+    <main className="min-h-screen flex items-center justify-center p-4">
+      <div className="bg-card p-4 text-card-foreground flex flex-col rounded-lg border shadow-sm w-full max-w-md">
+        <header>
+          <p className="text-xl text-center">Focusing On:</p>
+          <h1 className="text-2xl text-center font-bold">{name}</h1>
+          {description && <p className="text-center mt-2">{description}</p>}
+        </header>
+        <footer className="mt-6 flex flex-col gap-3">
+          <Button className="w-full">
+            <Check /> Mark As Completed
+          </Button>
+          <Button variant="outline" className="w-full">
+            Bypass Focus Mode
+          </Button>
+        </footer>
+      </div>
+    </main>
+  );
+};
+
 const TasksViewContent = () => {
   const session = useAuthContextSession();
   const [tasksResult, setTasksResult] = useState<TasksResult>(["busy"]);
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: Deps here are not needed
   useEffect(() => {
     const getTasks = async () => {
@@ -113,16 +146,63 @@ const TasksViewContent = () => {
   }
 
   return (
-    <ul className="w-full">
-      {tasksData.map((task) => (
-        <li key={task.id}>
-          <h1>{task.name}</h1>
-          <p>{task.description}</p>
-          <p>{task.priority}</p>
-          <p>{task.status}</p>
-          <p>{format(parseISO(task.c_date), "yyyy-MM-dd HH:mm:ss")}</p>
-        </li>
-      ))}
+    <ul className="w-full flex flex-col gap-2">
+      {tasksData.map((task) => {
+        if (task.status === "todo") {
+          return (
+            <li
+              className="bg-card py-2 px-3 text-card-foreground flex flex-col rounded-lg border shadow-sm"
+              key={task.id}
+            >
+              <div className="flex justify-between">
+                <h2 className="font-semibold pr-4">{task.name}</h2>
+                <p className="text-sm">{PRIORITY_LABELS[task.priority]}</p>
+              </div>
+              {task.description && <p>{task.description}</p>}
+              <Button className="w-fit mt-4" variant="outline">
+                <Clock />
+                Start
+              </Button>
+            </li>
+          );
+        }
+
+        if (task.status === "pending") {
+          return (
+            <li
+              className="bg-card py-2 px-3 text-card-foreground flex flex-col rounded-lg border shadow-sm"
+              key={task.id}
+            >
+              <div className="flex justify-between">
+                <h2 className="font-semibold pr-4">{task.name}</h2>
+                <p className="text-sm">{PRIORITY_LABELS[task.priority]}</p>
+              </div>
+              {task.description && <p>{task.description}</p>}
+              <Button className="w-fit mt-4" variant="outline">
+                <Clock />
+                In Progress
+              </Button>
+            </li>
+          );
+        }
+
+        return (
+          <li
+            className="bg-card py-2 px-3 text-card-foreground flex flex-col rounded-lg border shadow-sm"
+            key={task.id}
+          >
+            <div className="flex justify-between">
+              <h2 className="font-semibold pr-4">{task.name}</h2>
+              <p className="text-sm">{PRIORITY_LABELS[task.priority]}</p>
+            </div>
+            {task.description && <p>{task.description}</p>}
+            <Button className="line-through w-fit mt-4" variant="outline">
+              <Check />
+              Done in {formatDistanceToNow(parseISO(task.c_date))}
+            </Button>
+          </li>
+        );
+      })}
     </ul>
   );
 };

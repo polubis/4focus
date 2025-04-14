@@ -58,7 +58,8 @@ export const GET: APIRoute = async ({ request }) => {
       .from("tasks")
       .select("*")
       .eq("user_id", user.id)
-      .order("c_date", { ascending: false });
+      .order("priority", { ascending: true })
+      .order("c_date", { ascending: true });
 
     if (tasksError) {
       const error: GetTasks["error"] = {
