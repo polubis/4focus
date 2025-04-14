@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { Database } from "../db/database.types";
-import type { Prettify } from "../libs/types";
+import type { Prettify } from "../lib/types";
 
 type TaskRow = Database["public"]["Tables"]["tasks"]["Row"];
 

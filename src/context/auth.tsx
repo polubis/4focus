@@ -6,12 +6,12 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { supabase } from "../db/supabase";
-import { assert } from "../libs/assert";
+import { supabase } from "@/db/supabase";
+import { assert } from "@/lib/assert";
 
 const AuthContext = createContext<{ user: User | undefined } | null>(null);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | undefined>();
 
   useEffect(() => {
@@ -29,10 +29,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   return <AuthContext value={{ user }}>{children}</AuthContext>;
 };
 
-export const useAuthContext = () => {
+const useAuthContext = () => {
   const context = useContext(AuthContext);
 
   assert(context, "useAuthContext must be used within an AuthProvider");
 
   return context;
 };
+
+export { AuthProvider, useAuthContext };

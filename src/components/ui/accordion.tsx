@@ -12,7 +12,7 @@ import {
 } from "@radix-ui/react-accordion";
 import { ChevronDown } from "lucide-react";
 
-import { cn } from "../libs/cn";
+import { cn } from "@/lib/utils";
 
 const AccordionItem = forwardRef<
   ComponentRef<typeof Item>,

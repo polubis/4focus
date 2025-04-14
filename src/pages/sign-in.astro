@@ -1,8 +1,8 @@
 ---
-import { SigninForm } from "../components/sign-in";
-import MainLayout from "../layouts/main.layout.astro";
+import { SignInView } from "@/components/views/sign-in";
+import MainLayout from "@/layouts/main.astro";
 ---
 
 <MainLayout>
-	<SigninForm client:load />
+	<SignInView client:load />
 </MainLayout> 

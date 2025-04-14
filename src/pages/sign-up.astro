@@ -1,9 +1,9 @@
 ---
-import { SignupForm } from "../components/sign-up";
-import MainLayout from "../layouts/main.layout.astro";
+import { SignUpView } from "@/components/views/sign-up";
+import MainLayout from "@/layouts/main.astro";
 ---
 
 <MainLayout>
-	<SignupForm client:load />
+	<SignUpView client:load />
 </MainLayout>
 

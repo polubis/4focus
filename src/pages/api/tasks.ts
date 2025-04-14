@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
-import { postTaskPayloadSchema, type PostTask } from "../../contracts";
-import { createSupabaseClient } from "../../db/supabase";
-import type { Database } from "../../db/database.types";
+import { postTaskPayloadSchema, type PostTask } from "@/contracts";
+import { createSupabaseClient } from "@/db/supabase";
+import type { Database } from "@/db/database.types";
 
 export const prerender = false;
 

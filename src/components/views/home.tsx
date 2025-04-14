@@ -1,9 +1,9 @@
-import { AuthProvider, useAuthContext } from "../context/auth";
-import { Button } from "../ui/button";
-import { AccordionTrigger } from "../ui/accordion";
-import { AccordionItem } from "../ui/accordion";
-import { Accordion } from "../ui/accordion";
-import { AccordionContent } from "../ui/accordion";
+import { AuthProvider, useAuthContext } from "@/context/auth";
+import { Button } from "@/components/ui/button";
+import { AccordionTrigger } from "@/components/ui/accordion";
+import { AccordionItem } from "@/components/ui/accordion";
+import { Accordion } from "@/components/ui/accordion";
+import { AccordionContent } from "@/components/ui/accordion";
 import { navigate } from "astro:transitions/client";
 
 const ADHDAnimation = () => {

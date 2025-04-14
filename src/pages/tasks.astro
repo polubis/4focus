@@ -1,8 +1,8 @@
 ---
-import { TodoForm } from "../components/todo-form";
-import MainLayout from "../layouts/main.layout.astro";
+import { TaskForm } from "@/components/views/task-form";
+import MainLayout from "@/layouts/main.astro";
 ---
 
 <MainLayout>
-	<TodoForm client:load />
+	<TaskForm client:load />
 </MainLayout> 
