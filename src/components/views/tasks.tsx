@@ -69,7 +69,7 @@ const TasksViewContent = () => {
                 <FormControl>
                   <Input placeholder="E.g. Fix login bug" {...field} />
                 </FormControl>
-                <FormDescription>Short, concise task name.</FormDescription>
+                <FormDescription>Short, concise task name</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -90,8 +90,7 @@ const TasksViewContent = () => {
                   />
                 </FormControl>
                 <FormDescription>
-                  Provide more details about the task. Remember the minimum
-                  length of 10 characters if you decide to add a description.
+                  Provide more details about the task
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -121,7 +120,18 @@ const TasksViewContent = () => {
                   </SelectContent>
                 </Select>
                 <FormDescription>
-                  Choose the importance level of the task (1 = highest).
+                  Choose the importance level of the task (1 = highest, 4 =
+                  lowest). To learn more about the{" "}
+                  <strong>Eisenhower Matrix</strong>, read{" "}
+                  <a
+                    className="underline"
+                    target="_blank"
+                    href="https://4markdown.com/how-to-be-productive-as-a-software-engineer/"
+                    rel="noreferrer"
+                  >
+                        How to be productive as a software engineer
+                  </a>{" "}
+                  article
                 </FormDescription>
                 <FormMessage />
               </FormItem>
