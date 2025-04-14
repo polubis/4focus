@@ -8,9 +8,19 @@ import { endpoint } from "@/lib/endpoint";
 import { useEffect, useState } from "react";
 import { format, parseISO } from "date-fns";
 import { Button } from "../ui/button";
-import { ArrowLeft, Plus } from "lucide-react";
+import { MessageSquareWarning, Plus } from "lucide-react";
 import { Input } from "../ui/input";
 import { Skeleton } from "../ui/skeleton";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { getRoute, navigate } from "@/lib/navigate";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 
 const ScreenLoader = () => {
   return (
@@ -34,9 +44,17 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="grid grid-rows-[48px_1fr_52px] grid-cols-1 min-h-screen">
       <header className="px-3 flex items-center sticky top-0 left-0 bg-background border-b border-b-accent">
-        <Button variant="outline" size="icon">
-          <ArrowLeft />
-        </Button>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href={getRoute("home")}>Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Tasks</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
       </header>
       <main className="py-2 px-3 flex items-center justify-center">
         {children}
@@ -83,7 +101,15 @@ const TasksViewContent = () => {
   }
 
   if (tasksStatus === "fail") {
-    return <div>Error</div>;
+    return (
+      <Alert variant="destructive">
+        <MessageSquareWarning className="h-4 w-4" />
+        <AlertTitle>
+          {tasksData.type}/({tasksData.code})
+        </AlertTitle>
+        <AlertDescription>{tasksData.message}</AlertDescription>
+      </Alert>
+    );
   }
 
   return (

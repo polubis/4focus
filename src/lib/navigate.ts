@@ -13,4 +13,6 @@ const navigate = (route: keyof typeof ROUTES) => {
   astroNavigate(`${ROUTES[route]}`);
 };
 
-export { navigate };
+const getRoute = (route: keyof typeof ROUTES) => ROUTES[route];
+
+export { navigate, getRoute };

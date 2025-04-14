@@ -16,7 +16,7 @@ export const GET: APIRoute = async ({ request }) => {
     if (!authHeader) {
       const error: GetTasks["error"] = {
         type: "unauthorized",
-        message: "Missing authorization header",
+        message: "Missing authorization header.",
         code: 401,
       };
 
@@ -28,7 +28,7 @@ export const GET: APIRoute = async ({ request }) => {
     if (!token) {
       const error: GetTasks["error"] = {
         type: "unauthorized",
-        message: "Broken authorization token",
+        message: "Broken authorization token.",
         code: 401,
       };
 
@@ -45,7 +45,7 @@ export const GET: APIRoute = async ({ request }) => {
     if (userError || !user) {
       const error: GetTasks["error"] = {
         type: "unauthorized",
-        message: "Invalid or expired token",
+        message: "Invalid or expired token.",
         code: 401,
       };
 
@@ -63,7 +63,7 @@ export const GET: APIRoute = async ({ request }) => {
     if (tasksError) {
       const error: GetTasks["error"] = {
         type: "internal_server_error",
-        message: "Failed to retrieve tasks",
+        message: "Failed to retrieve tasks.",
         code: 500,
       };
 
@@ -92,7 +92,7 @@ export const GET: APIRoute = async ({ request }) => {
   } catch (exception) {
     const error: GetTasks["error"] = {
       type: "internal_server_error",
-      message: "Internal server error",
+      message: "Internal server error.",
       code: 500,
     };
 
@@ -110,7 +110,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (!authHeader) {
       const error: PostTask["error"] = {
         type: "unauthorized",
-        message: "Missing authorization header",
+        message: "Missing authorization header.",
         code: 401,
       };
 
@@ -122,7 +122,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (!token) {
       const error: PostTask["error"] = {
         type: "unauthorized",
-        message: "Broken authorization token",
+        message: "Broken authorization token.",
         code: 401,
       };
 
@@ -143,7 +143,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (userError || !user) {
       const error: PostTask["error"] = {
         type: "unauthorized",
-        message: "Invalid or expired token",
+        message: "Invalid or expired token.",
         code: 401,
       };
 
@@ -182,7 +182,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (insertError || !insertedTask) {
       const error: PostTask["error"] = {
         type: "unprocessable_entity",
-        message: "Failed to create task",
+        message: "Failed to create task.",
         code: 422,
       };
 
@@ -211,7 +211,7 @@ export const POST: APIRoute = async ({ request }) => {
   } catch (exception) {
     const error: PostTask["error"] = {
       type: "internal_server_error",
-      message: "Internal server error",
+      message: "Internal server error.",
       code: 500,
     };
 
