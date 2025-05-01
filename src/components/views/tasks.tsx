@@ -5,7 +5,7 @@ import {
 } from "@/context/auth";
 import type { GetTasks } from "@/contracts";
 import { endpoint } from "@/lib/endpoint";
-import { useEffect, useState } from "react";
+import React from "react";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Check, Clock, MessageSquareWarning, Plus } from "lucide-react";
@@ -21,6 +21,104 @@ import {
 } from "@/components/ui/breadcrumb";
 import { getRoute } from "@/lib/navigate";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import type { Operation, Prettify } from "@/lib/types";
+import { context } from "@/lib/dk/context";
+
+const PRIORITY_LABELS = {
+  1: "Urgent",
+  2: "High",
+  3: "Medium",
+  4: "Low",
+} satisfies Record<GetTasks["dto"][number]["priority"], string>;
+
+type TasksViewState = {
+  busy: boolean;
+  error: GetTasks["error"] | null;
+  tasks: Prettify<
+    Pick<
+      GetTasks["dto"][number],
+      | "id"
+      | "name"
+      | "description"
+      | "c_date"
+      | "m_date"
+      | "priority"
+      | "status"
+      | "status_history"
+      | "user_id"
+    > & {
+      operation: Operation<null, GetTasks["error"]>;
+    }
+  >[];
+};
+
+type Action =
+  | { type: "initialize" }
+  | { type: "initialize_ok"; data: GetTasks["dto"] }
+  | { type: "initialize_fail"; error: GetTasks["error"] };
+
+const reducer: React.Reducer<TasksViewState, Action> = (state, action) => {
+  switch (action.type) {
+    case "initialize":
+      return { ...state, busy: true, error: null, tasks: [] };
+    case "initialize_ok":
+      return {
+        ...state,
+        busy: false,
+        error: null,
+        tasks: action.data.map((task) => ({
+          ...task,
+          operation: ["idle"],
+        })),
+      };
+    case "initialize_fail":
+      return { ...state, busy: false, error: action.error };
+    default:
+      return state;
+  }
+};
+
+const [ViewProvider, useViewContext] = context(() => {
+  const session = useAuthContextSession();
+  const [state, dispatch] = React.useReducer(reducer, {
+    busy: true,
+    error: null,
+    tasks: [],
+  });
+
+  const dispatchMiddleware = React.useCallback(
+    (action: Action) => {
+      const effects: Partial<
+        Record<Action["type"], (...args: unknown[]) => unknown>
+      > = {
+        initialize: async () => {
+          const [ok, data] = await endpoint(
+            "get_tasks",
+            null,
+            session.access_token,
+          );
+
+          ok
+            ? dispatch({ type: "initialize_ok", data })
+            : dispatch({ type: "initialize_fail", error: data });
+        },
+      };
+
+      dispatch(action);
+
+      effects[action.type]?.();
+    },
+    [session.access_token],
+  );
+
+  return React.useMemo(
+    () => ({
+      ...state,
+      dispatch: dispatchMiddleware,
+    }),
+    [state, dispatchMiddleware],
+  );
+});
 
 const ScreenLoader = () => {
   return (
@@ -71,22 +169,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-type TasksResult =
-  | ["busy"]
-  | ["ok", GetTasks["dto"]]
-  | ["fail", GetTasks["error"]];
-
-const PRIORITY_LABELS = {
-  1: "Urgent",
-  2: "High",
-  3: "Medium",
-  4: "Low",
-} satisfies Record<GetTasks["dto"][number]["priority"], string>;
-
 const FocusScreen = ({
   name,
   description,
 }: Pick<GetTasks["dto"][number], "name" | "description">) => {
+  const markAsCompleted = () => {};
+
   return (
     <main className="min-h-screen flex items-center justify-center p-4">
       <div className="bg-card p-4 text-card-foreground flex flex-col rounded-lg border shadow-sm w-full max-w-md">
@@ -109,45 +197,32 @@ const FocusScreen = ({
 };
 
 const TasksViewContent = () => {
-  const session = useAuthContextSession();
-  const [tasksResult, setTasksResult] = useState<TasksResult>(["busy"]);
+  const { busy, error, tasks, dispatch } = useViewContext();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Deps here are not needed
-  useEffect(() => {
-    const getTasks = async () => {
-      const [ok, data] = await endpoint(
-        "get_tasks",
-        null,
-        session.access_token,
-      );
-
-      ok ? setTasksResult(["ok", data]) : setTasksResult(["fail", data]);
-    };
-
-    getTasks();
+  React.useEffect(() => {
+    dispatch({ type: "initialize" });
   }, []);
 
-  const [tasksStatus, tasksData] = tasksResult;
-
-  if (tasksStatus === "busy") {
+  if (busy) {
     return <ScreenLoader />;
   }
 
-  if (tasksStatus === "fail") {
+  if (error) {
     return (
       <Alert variant="destructive">
         <MessageSquareWarning className="h-4 w-4" />
         <AlertTitle>
-          {tasksData.type}/({tasksData.code})
+          {error.type}/({error.code})
         </AlertTitle>
-        <AlertDescription>{tasksData.message}</AlertDescription>
+        <AlertDescription>{error.message}</AlertDescription>
       </Alert>
     );
   }
 
   return (
     <ul className="w-full flex flex-col gap-2">
-      {tasksData.map((task) => {
+      {tasks.map((task) => {
         if (task.status === "todo") {
           return (
             <li
@@ -208,7 +283,13 @@ const TasksViewContent = () => {
 };
 
 const TaskViewContentProtected = () =>
-  useAuthContext().session ? <TasksViewContent /> : <ScreenLoader />;
+  useAuthContext().session ? (
+    <ViewProvider>
+      <TasksViewContent />
+    </ViewProvider>
+  ) : (
+    <ScreenLoader />
+  );
 
 const TasksView = () => {
   return (
